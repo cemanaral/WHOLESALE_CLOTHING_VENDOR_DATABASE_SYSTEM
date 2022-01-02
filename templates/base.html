@@ -5,3 +5,14 @@
 {% block navbar %}
     {{nav.top.render()}}
 {% endblock %}
+
+{% block content %}
+    {% block container %}
+    <div class="container">
+        <table class="table">
+            {% block table %}
+            {% endblock %}
+        </table>
+    </div>
+    {% endblock %}
+{% endblock %}
