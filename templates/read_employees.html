@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block section %}Employees{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Ssn</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Birth Date</th>
+        <th scope="col">Age</th>
+        <th scope="col">Dno</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Country</th>
+        <th scope="col">City</th>
+        <th scope="col">Postal Code</th>
+        <th scope="col">Salary</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for employee in employee_info %}
+      <tr>
+        {% for item in employee %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+  </table>
+
+  
+{% endblock %}
+
