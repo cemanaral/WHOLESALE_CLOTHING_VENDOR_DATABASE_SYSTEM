@@ -236,7 +236,7 @@ def execute_sp_empty_manager(form):
     cursor.execute(f'exec sp_EmptyManager{string_arg}')
     cursor.commit()
 
-
+#AA
 def print_form(form):
     for item in list(form):
         print(item)
