@@ -98,6 +98,14 @@ def read_clothing_inventory():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_inventory.html', clothing_info=clothing_info)
 
+@app.route("/clothing/read_clothing_types")
+def read_clothing_types():
+    cursor = connection.cursor()
+    cursor.execute('select * from ClothingTypes')
+    clothing_info = cursor.fetchall()
+    return render_template('read_clothing_types.html', clothing_info=clothing_info)
+    
+
 
 def print_form(form):
     for item in list(form):
