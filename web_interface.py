@@ -251,7 +251,14 @@ def read_outgoing_shipments():
     shipment_info = cursor.fetchall()
     return render_template('read_outgoing_shipments.html', shipment_info=shipment_info)
 
-#AA
+@app.route('/shipment/read_name_of_logistics')
+def read_name_of_logistics():
+    cursor = connection.cursor()
+    cursor.execute('select * from NameOfContractedLogistics')
+    logistics_info = cursor.fetchall()
+    return render_template('read_name_of_logistics.html', logistics_info=logistics_info)
+
+
 def print_form(form):
     for item in list(form):
         print(item)
