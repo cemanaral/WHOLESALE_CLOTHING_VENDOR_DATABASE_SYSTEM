@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block section %}Department{% endblock %}
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Ssn</th>
+        <th scope="col">FullName</th>
+        <th scope="col">Dno</th>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for manager in manager_info %}
+      <tr>
+        {% for item in manager %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+
