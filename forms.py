@@ -79,3 +79,9 @@ class CreateShopForm(FlaskForm):
 class DeleteShopForm(FlaskForm):
     TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
 
+
+
+class CreateIncomingShipmentForm(FlaskForm):
+    InventoryCode = IntegerField('InventoryCode', validators=[DataRequired()])
+    ProducerTaxNumber = IntegerField('ProducerTaxNumber', validators=[DataRequired()])
+    LogisticsTaxNumber = IntegerField('LogisticsTaxNumber', validators=[DataRequired()])

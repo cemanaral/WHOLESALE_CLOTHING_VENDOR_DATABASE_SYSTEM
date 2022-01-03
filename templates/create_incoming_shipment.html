@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Create Incoming Shipment{% endblock %}
+
+
+{% block container %}
+  <h1>Create Incoming Shipment</h1>
+  <form method="POST" action="/shipment/create_incoming_shipment">
+    {{ form.csrf_token }}
+    {{ render_field(form.InventoryCode) }}
+    {{ render_field(form.ProducerTaxNumber) }}
+    {{ render_field(form.LogisticsTaxNumber) }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
+

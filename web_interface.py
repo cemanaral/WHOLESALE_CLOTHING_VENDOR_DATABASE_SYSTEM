@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import redirect
+from wtforms.form import Form
 from nav import nav
 from forms import *
 from flask_wtf.csrf import CSRFProtect
@@ -328,6 +329,29 @@ def read_name_of_logistics():
     cursor.execute('select * from NameOfContractedLogistics')
     logistics_info = cursor.fetchall()
     return render_template('read_name_of_logistics.html', logistics_info=logistics_info)
+
+@app.route('/shipment/create_incoming_shipment', methods=['GET', 'POST'])
+def create_incoming_shipment():
+    form = CreateIncomingShipmentForm()
+    if request.method == 'GET':
+        return render_template('create_incoming_shipment.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_incoming_shipment(form)
+            return redirect('/shipment/create_incoming_shipment')
+        return 'invalid form'
+
+def execute_sp_create_incoming_shipment(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateIncomingShipment {string_arg}')
+    cursor.commit()
+    
 
 ################################################################################
 
