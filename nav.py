@@ -46,7 +46,8 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         View('Show Incoming Shipments', 'read_incoming_shipments'),
         View('Show Outgoing Shipments', 'read_outgoing_shipments'),
         View('Show Contracted Logistics Companies', 'read_name_of_logistics'),
-        View('Create Incoming Shipment', 'create_incoming_shipment')
+        View('Create Incoming Shipment', 'create_incoming_shipment'),
+        View('Create Outgoing Shipment','create_outgoing_shipment')
     ),
     
 )    

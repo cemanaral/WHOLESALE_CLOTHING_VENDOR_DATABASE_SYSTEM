@@ -85,3 +85,10 @@ class CreateIncomingShipmentForm(FlaskForm):
     InventoryCode = IntegerField('InventoryCode', validators=[DataRequired()])
     ProducerTaxNumber = IntegerField('ProducerTaxNumber', validators=[DataRequired()])
     LogisticsTaxNumber = IntegerField('LogisticsTaxNumber', validators=[DataRequired()])
+
+
+class CreateOutgoingShipmentForm(FlaskForm):
+    InventoryCode = IntegerField('InventoryCode', validators=[DataRequired()])
+    ShopTaxNumber = IntegerField('ShopTaxNumber', validators=[DataRequired()])
+    LogisticsTaxNumber = IntegerField('LogisticsTaxNumber', validators=[DataRequired()])
+

@@ -352,6 +352,26 @@ def execute_sp_create_incoming_shipment(form):
     cursor.execute(f'exec sp_CreateIncomingShipment {string_arg}')
     cursor.commit()
     
+@app.route('/shipment/create_outgoing_shipment', methods=['GET', 'POST'])
+def create_outgoing_shipment():
+    form = CreateOutgoingShipmentForm()
+    if request.method == 'GET':
+        return render_template('create_outgoing_shipment.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_outgoing_shipment(form)
+            return redirect('/shipment/create_outgoing_shipment')
+
+def execute_sp_create_outgoing_shipment(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateOutgoingShipment {string_arg}')
+    cursor.commit()
 
 ################################################################################
 
