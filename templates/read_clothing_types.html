@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+
+{% block section %}Clothing Types and Amounts{% endblock %}
+
+
+
+
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for clothing in clothing_info %}
+      <tr>
+        {% for item in clothing %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+
+

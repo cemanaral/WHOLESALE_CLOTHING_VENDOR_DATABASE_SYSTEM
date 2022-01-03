@@ -20,6 +20,7 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         'Clothing',
         View('Show Clothes', 'read_clothing'),
         View('Show Clothing Inventory Locations', 'read_clothing_inventory'),
+        View('Show Clothing Types and Amounts', 'read_clothing_types'),
     ),
 )    
 
