@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Delete Employee{% endblock %}
+
+
+
+{% block container %}
+  <h1>Delete Employee</h1>
+  <form method="POST" action="/employee/delete_employee">
+    {{ form.csrf_token }}
+    {{ render_field(form.Ssn) }}
+    <input type="submit" value="Delete">
+  </form>
+{% endblock %}

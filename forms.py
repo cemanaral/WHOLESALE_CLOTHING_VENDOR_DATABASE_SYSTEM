@@ -36,7 +36,11 @@ class CreateClothingForm(FlaskForm):
     SPrice = IntegerField('SPrice', validators=[DataRequired()])
     ShipmentId = IntegerField('ShipmentId', validators=[DataRequired()])
 
+
 class EmptyManagerForm(FlaskForm):
     Dno = IntegerField('Dno', validators=[DataRequired()])
 
+
+class DeleteEmployeeForm(FlaskForm):
+    Ssn = IntegerField('Ssn', validators=[DataRequired()])
 
