@@ -7,7 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'YUSUFHASAN'
+SERVER_NAME = 'LAPTOP-JVD1T1M5'
 
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
@@ -17,7 +17,7 @@ connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database=
 app = Flask(__name__)
 Bootstrap(app)
 nav.init_app(app)
-app.secret_key = 'DFASUYUH2341'
+app.secret_key = 'secret key'
 csrf = CSRFProtect(app)
 
 
@@ -235,6 +235,21 @@ def execute_sp_empty_manager(form):
     cursor = connection.cursor()
     cursor.execute(f'exec sp_EmptyManager{string_arg}')
     cursor.commit()
+
+@app.route('/shipment/read_incoming_shipments')
+def read_incoming_shipments():
+    cursor = connection.cursor()
+    cursor.execute('select * from IncomingShipments')
+    shipment_info = cursor.fetchall()
+    return render_template('read_incoming_shipments.html', shipment_info=shipment_info)
+
+
+@app.route('/shipment/read_outgoing_shipments')
+def read_outgoing_shipments():
+    cursor = connection.cursor()
+    cursor.execute('select * from OutgoingShipments')
+    shipment_info = cursor.fetchall()
+    return render_template('read_outgoing_shipments.html', shipment_info=shipment_info)
 
 #AA
 def print_form(form):
