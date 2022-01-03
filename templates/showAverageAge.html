@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block section %}Department{% endblock %}
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Dno</th>
+        <th scope="col">AverageAge</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for data in table %}
+      <tr>
+        {% for item in data %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+

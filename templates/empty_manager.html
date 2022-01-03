@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Empty Manager{% endblock %}
+
+{% block container %}
+  <h1>Empty Manager</h1>
+  <form method="POST" action="/department/empty_manager">
+    {{ form.csrf_token }}
+    {{ render_field(form.Dno) }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
+

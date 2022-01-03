@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Create Department{% endblock %}
+
+{% block container %}
+  <h1>Create Department</h1>
+  <form method="POST" action="/department/create_department">
+    {{ form.csrf_token }}
+    {{ render_field(form.Dno) }}
+    {{ render_field(form.Name) }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
+

@@ -7,7 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'LAPTOP-JVD1T1M5'
+SERVER_NAME = 'YUSUFHASAN'
 
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
@@ -126,7 +126,62 @@ def read_clothing_types():
     cursor.execute('select * from ClothingTypes')
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_types.html', clothing_info=clothing_info)
+
+
+
+
     
+
+@app.route('/department/averageAgeOfDepartment', methods=['GET', 'POST'])
+def averageAgeOfDepartment():
+    form = AverageAgeOfDeparment()
+    if request.method == 'GET':
+        return render_template('averageAgeOfDepartment.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            table = execute_sp_averageAgeOfDepartment(form)
+            return render_template('showAverageAge.html',table=table)
+        return 'invalid form'
+
+def execute_sp_averageAgeOfDepartment(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_AverageAgeOfDepartment{string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_AverageAgeOfDepartment{string_arg}')
+    return cursor.fetchall()
+
+
+
+
+@app.route('/department/create_department', methods=['GET', 'POST'])
+def create_department():
+    form = CreateDepartmentForm()
+    if request.method == 'GET':
+        return render_template('create_department.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_department(form)
+            return redirect('/department/create_department')
+        return 'invalid form'
+
+def execute_sp_create_department(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_CreateDepartment {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateDepartment{string_arg}')
+    cursor.commit()
+
+
 @app.route("/clothing/read_clothing_profit")
 def read_clothing_profit():
     cursor = connection.cursor()
@@ -155,7 +210,31 @@ def execute_sp_create_clothing(form):
     cursor = connection.cursor()
     cursor.execute(f'exec sp_CreateClothing {arguments_str}')
     cursor.commit()
-    
+
+
+
+@app.route('/department/empty_manager', methods=['GET', 'POST'])
+def empty_manager():
+    form = EmptyManagerForm()
+    if request.method == 'GET':
+        return render_template('empty_manager.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_empty_manager(form)
+            return redirect('/department/empty_manager')
+        return 'invalid form'
+
+def execute_sp_empty_manager(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_EmptyManager {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_EmptyManager{string_arg}')
+    cursor.commit()
 
 
 def print_form(form):

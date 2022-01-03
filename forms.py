@@ -17,6 +17,14 @@ class CreateEmployeeForm(FlaskForm):
     Salary = IntegerField('Salary', validators=[DataRequired()])
 
 
+class AverageAgeOfDeparment(FlaskForm):
+    Dno = IntegerField('Dno', validators=[DataRequired()])
+
+class CreateDepartmentForm(FlaskForm):
+    Dno = IntegerField('Dno', validators=[DataRequired()])
+    Name = StringField('Name', validators=[DataRequired()])
+
+
 class CreateClothingForm(FlaskForm):
     Name = StringField('Name', validators=[DataRequired()])
     PTax = IntegerField('PTax', validators=[DataRequired()])
@@ -28,5 +36,11 @@ class CreateClothingForm(FlaskForm):
     SPrice = IntegerField('SPrice', validators=[DataRequired()])
     ShipmentId = IntegerField('ShipmentId', validators=[DataRequired()])
 
+
+class EmptyManagerForm(FlaskForm):
+    Dno = IntegerField('Dno', validators=[DataRequired()])
+
+
 class DeleteEmployeeForm(FlaskForm):
     Ssn = IntegerField('Ssn', validators=[DataRequired()])
+
