@@ -84,6 +84,14 @@ def read_department():
     return render_template('read_department.html', department_info=department_info)
 
 
+@app.route('/clothing/read_clothing')
+def read_clothing():
+    cursor = connection.cursor()
+    cursor.execute('select * from CLOTHING')
+    clothing_info = cursor.fetchall()
+    return render_template('read_clothing.html', clothing_info=clothing_info)
+
+
 def print_form(form):
     for item in list(form):
         print(item)
