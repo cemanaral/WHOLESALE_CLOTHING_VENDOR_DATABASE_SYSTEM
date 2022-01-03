@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block section %}Incoming Shipments{% endblock %}
+
+
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Shipment ID</th>
+        <th scope="col">Shipment Date</th>
+        <th scope="col">Inventory Code</th>
+        <th scope="col">Producer Tax Number</th>
+        <th scope="col">Logistics Tax Number</th>
+        <th scope="col">Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for shipment in shipment_info %}
+      <tr>
+        {% for item in shipment %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+

@@ -7,7 +7,13 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'DESKTOP-ESS1P61'
+
+SERVER_NAME = 'LAPTOP-JVD1T1M5'
+
+
+connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
+               trusted_connection='yes')
+
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
                             database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',
@@ -16,7 +22,7 @@ connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
 app = Flask(__name__)
 Bootstrap(app)
 nav.init_app(app)
-app.secret_key = 'DFASUYUH2341'
+app.secret_key = 'secret key'
 csrf = CSRFProtect(app)
 
 
@@ -240,6 +246,7 @@ def execute_sp_empty_manager(form):
     cursor.commit()
 
 
+
 @app.route('/department/set_manager', methods=['GET', 'POST'])
 def set_manager():
     form = SetManagerForm()
@@ -265,7 +272,31 @@ def execute_sp_set_manager(form):
     cursor.commit()
 
 
-# AA
+
+@app.route('/shipment/read_incoming_shipments')
+def read_incoming_shipments():
+    cursor = connection.cursor()
+    cursor.execute('select * from IncomingShipments')
+    shipment_info = cursor.fetchall()
+    return render_template('read_incoming_shipments.html', shipment_info=shipment_info)
+
+
+@app.route('/shipment/read_outgoing_shipments')
+def read_outgoing_shipments():
+    cursor = connection.cursor()
+    cursor.execute('select * from OutgoingShipments')
+    shipment_info = cursor.fetchall()
+    return render_template('read_outgoing_shipments.html', shipment_info=shipment_info)
+
+@app.route('/shipment/read_name_of_logistics')
+def read_name_of_logistics():
+    cursor = connection.cursor()
+    cursor.execute('select * from NameOfContractedLogistics')
+    logistics_info = cursor.fetchall()
+    return render_template('read_name_of_logistics.html', logistics_info=logistics_info)
+
+
+
 def print_form(form):
     for item in list(form):
         print(item)
