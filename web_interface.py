@@ -74,6 +74,7 @@ def execute_sp_create_employee(form):
     print((f'exec sp_CreateEmployee {string_arg}'))
     cursor = connection.cursor()
     cursor.execute(f'exec sp_CreateEmployee{string_arg}')
+    cursor.commit()
     
 
 def print_form(form):
