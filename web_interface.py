@@ -7,12 +7,11 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'YUSUFHASAN'
+SERVER_NAME = 'DESKTOP-ESS1P61'
 
-
-connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
-               trusted_connection='yes')
-
+connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
+                            database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',
+                            trusted_connection='yes')
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -21,11 +20,10 @@ app.secret_key = 'DFASUYUH2341'
 csrf = CSRFProtect(app)
 
 
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/employee/read_employees')
 def read_employees():
@@ -35,6 +33,7 @@ def read_employees():
 
     return render_template('read_employees.html', employee_info=employee_info)
 
+
 @app.route('/employee/top_five_employees')
 def top_five_employees():
     cursor = connection.cursor()
@@ -42,6 +41,7 @@ def top_five_employees():
     top_five_earners = cursor.fetchall()
 
     return render_template('top_five_earner_employees.html', top_five_earners=top_five_earners)
+
 
 @app.route('/employee/department_of_employees')
 def department_of_employees():
@@ -63,6 +63,7 @@ def create_employee():
             return redirect('/employee/create_employee')
         return 'invalid form'
 
+
 @app.route('/employee/delete_employee', methods=['GET', 'POST'])
 def delete_employee():
     form = DeleteEmployeeForm()
@@ -72,23 +73,25 @@ def delete_employee():
         ssn = form.Ssn.raw_data[0]
         print(ssn)
         cursor = connection.cursor()
-        cursor.execute( f"exec sp_DeleteEmployee {ssn}" )
+        cursor.execute(f"exec sp_DeleteEmployee {ssn}")
         cursor.commit()
         return redirect('/employee/delete_employee')
+
 
 def execute_sp_create_employee(form):
     birthdateindex = 3
     arguments = []
     for item in list(form):
         arguments.append(str(item.raw_data[0]))
-    arguments.pop() # csrf token is not used
-    arguments[birthdateindex] += " 00:00:00" # hour info is required
+    arguments.pop()  # csrf token is not used
+    arguments[birthdateindex] += " 00:00:00"  # hour info is required
 
     string_arg = str(arguments)[1:-1]
     print((f'exec sp_CreateEmployee {string_arg}'))
     cursor = connection.cursor()
     cursor.execute(f'exec sp_CreateEmployee{string_arg}')
     cursor.commit()
+
 
 @app.route('/department/read_department')
 def read_department():
@@ -105,6 +108,7 @@ def read_clothing():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing.html', clothing_info=clothing_info)
 
+
 @app.route("/clothing/read_clothing_inventory")
 def read_clothing_inventory():
     cursor = connection.cursor()
@@ -120,6 +124,7 @@ def read_managers():
     manager_info = cursor.fetchall()
     return render_template('read_managers.html', manager_info=manager_info)
 
+
 @app.route("/clothing/read_clothing_types")
 def read_clothing_types():
     cursor = connection.cursor()
@@ -127,10 +132,6 @@ def read_clothing_types():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_types.html', clothing_info=clothing_info)
 
-
-
-
-    
 
 @app.route('/department/averageAgeOfDepartment', methods=['GET', 'POST'])
 def averageAgeOfDepartment():
@@ -140,22 +141,21 @@ def averageAgeOfDepartment():
     if request.method == 'POST':
         if form.validate_on_submit():
             table = execute_sp_averageAgeOfDepartment(form)
-            return render_template('showAverageAge.html',table=table)
+            return render_template('showAverageAge.html', table=table)
         return 'invalid form'
+
 
 def execute_sp_averageAgeOfDepartment(form):
     arguments = []
     for item in list(form):
         arguments.append(str(item.raw_data[0]))
-    arguments.pop() # csrf token is not used
+    arguments.pop()  # csrf token is not used
 
     string_arg = str(arguments)[1:-1]
     print((f'exec sp_AverageAgeOfDepartment{string_arg}'))
     cursor = connection.cursor()
     cursor.execute(f'exec sp_AverageAgeOfDepartment{string_arg}')
     return cursor.fetchall()
-
-
 
 
 @app.route('/department/create_department', methods=['GET', 'POST'])
@@ -169,11 +169,12 @@ def create_department():
             return redirect('/department/create_department')
         return 'invalid form'
 
+
 def execute_sp_create_department(form):
     arguments = []
     for item in list(form):
         arguments.append(str(item.raw_data[0]))
-    arguments.pop() # csrf token is not used
+    arguments.pop()  # csrf token is not used
 
     string_arg = str(arguments)[1:-1]
     print((f'exec sp_CreateDepartment {string_arg}'))
@@ -189,6 +190,7 @@ def read_clothing_profit():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_profit.html', clothing_info=clothing_info)
 
+
 @app.route("/clothing/create_clothing", methods=['GET', 'POST'])
 def create_clothing():
     form = CreateClothingForm()
@@ -199,6 +201,7 @@ def create_clothing():
             execute_sp_create_clothing(form)
             return redirect("/clothing/create_clothing")
         return 'invalid form'
+
 
 def execute_sp_create_clothing(form):
     arguments = []
@@ -212,7 +215,6 @@ def execute_sp_create_clothing(form):
     cursor.commit()
 
 
-
 @app.route('/department/empty_manager', methods=['GET', 'POST'])
 def empty_manager():
     form = EmptyManagerForm()
@@ -224,11 +226,12 @@ def empty_manager():
             return redirect('/department/empty_manager')
         return 'invalid form'
 
+
 def execute_sp_empty_manager(form):
     arguments = []
     for item in list(form):
         arguments.append(str(item.raw_data[0]))
-    arguments.pop() # csrf token is not used
+    arguments.pop()  # csrf token is not used
 
     string_arg = str(arguments)[1:-1]
     print((f'exec sp_EmptyManager {string_arg}'))
@@ -236,10 +239,37 @@ def execute_sp_empty_manager(form):
     cursor.execute(f'exec sp_EmptyManager{string_arg}')
     cursor.commit()
 
-#AA
+
+@app.route('/department/set_manager', methods=['GET', 'POST'])
+def set_manager():
+    form = SetManagerForm()
+    if request.method == 'GET':
+        return render_template('set_manager.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_set_manager(form)
+            return redirect('/department/set_manager')
+        return 'invalid form'
+
+
+def execute_sp_set_manager(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop()  # csrf token is not used
+
+    string_arg = str(arguments[::-1])[1:-1]
+    print((f'exec sp_SetManager {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_SetManager {string_arg}')
+    cursor.commit()
+
+
+# AA
 def print_form(form):
     for item in list(form):
         print(item)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
