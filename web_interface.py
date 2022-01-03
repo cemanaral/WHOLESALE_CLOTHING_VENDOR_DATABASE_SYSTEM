@@ -75,7 +75,14 @@ def execute_sp_create_employee(form):
     cursor = connection.cursor()
     cursor.execute(f'exec sp_CreateEmployee{string_arg}')
     cursor.commit()
-    
+
+@app.route('/department/read_department')
+def read_department():
+    cursor = connection.cursor()
+    cursor.execute('select * from DEPARTMENT')
+    department_info = cursor.fetchall()
+    return render_template('read_department.html', department_info=department_info)
+
 
 def print_form(form):
     for item in list(form):

@@ -11,6 +11,10 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         View('Show Departments of Employees', 'department_of_employees'),
         View('Create Employee', 'create_employee')
     ),
+    Subgroup(
+        'Department',
+        View('Show Departments', 'read_department'),
+    ),
 )    
 
 
