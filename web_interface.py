@@ -236,7 +236,43 @@ def execute_sp_empty_manager(form):
     cursor.execute(f'exec sp_EmptyManager{string_arg}')
     cursor.commit()
 
-#AA
+@app.route("/producer/read_producer")
+def read_producer():
+    cursor = connection.cursor()
+    cursor.execute('select * from PRODUCER p inner join COMPANY c on p.TaxNumber = c.TaxNumber')
+    read_producer_info = cursor.fetchall()
+    return render_template('read_producer.html', read_producer_info=read_producer_info)
+
+@app.route("/shop/read_shop")
+def read_shop():
+    cursor = connection.cursor()
+    cursor.execute('select * from SHOP s inner join COMPANY c on s.TaxNumber = c.TaxNumber')
+    read_shop_info = cursor.fetchall()
+    return render_template('read_shop.html', read_shop_info=read_shop_info)
+
+@app.route('/producer/create_producer', methods=['GET', 'POST'])
+def create_producer():
+    form = CreateProducerForm()
+    if request.method == 'GET':
+        return render_template('create_producer.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_producer(form)
+            return redirect('/producer/create_producer')
+        return 'invalid form'
+
+def execute_sp_create_producer(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_CreateProducer {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateProducer{string_arg}')
+    cursor.commit()
+
 def print_form(form):
     for item in list(form):
         print(item)

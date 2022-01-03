@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+
+{% block section %}Shop{% endblock %}
+
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">TaxNumber</th>
+        <th scope="col">CompanyName</th>
+        <th scope="col">Country</th>
+        <th scope="col">City</th>
+        <th scope="col">PostalCode</th>
+        <th scope="col">BankAccountNumber</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for shop in read_shop_info %}
+      <tr>
+        {% for item in shop %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+
+

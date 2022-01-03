@@ -28,6 +28,15 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         View('Show Clothing Profits', 'read_clothing_profit'),
         View('Create Clothing', 'create_clothing'),
     ),
+    Subgroup(
+        'Producer',
+        View('Show Producers', 'read_producer'),
+        View('Create Producer', 'create_producer'),
+    ),
+    Subgroup(
+        'Shop',
+        View('Show Shops', 'read_shop'),
+    ),
 )    
 
 
