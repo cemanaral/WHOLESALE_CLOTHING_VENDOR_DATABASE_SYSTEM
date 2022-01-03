@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block section %}Departments of Employees{% endblock %}
+
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Ssn</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Dno</th>
+        <th scope="col">Department</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for employee in employee_info %}
+      <tr>
+        {% for item in employee %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
