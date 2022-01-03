@@ -7,13 +7,11 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
+SERVER_NAME = 'DESKTOP-ESS1P61'
 
-SERVER_NAME = 'LAPTOP-JVD1T1M5'
-
-
-connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
-               trusted_connection='yes')
-
+connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
+                            database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',
+                            trusted_connection='yes')
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
                             database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',
@@ -253,12 +251,14 @@ def read_producer():
     read_producer_info = cursor.fetchall()
     return render_template('read_producer.html', read_producer_info=read_producer_info)
 
+
 @app.route("/shop/read_shop")
 def read_shop():
     cursor = connection.cursor()
     cursor.execute('select * from SHOP s inner join COMPANY c on s.TaxNumber = c.TaxNumber')
     read_shop_info = cursor.fetchall()
     return render_template('read_shop.html', read_shop_info=read_shop_info)
+
 
 @app.route('/producer/create_producer', methods=['GET', 'POST'])
 def create_producer():
@@ -271,18 +271,18 @@ def create_producer():
             return redirect('/producer/create_producer')
         return 'invalid form'
 
+
 def execute_sp_create_producer(form):
     arguments = []
     for item in list(form):
         arguments.append(str(item.raw_data[0]))
-    arguments.pop() # csrf token is not used
+    arguments.pop()  # csrf token is not used
 
     string_arg = str(arguments)[1:-1]
     print((f'exec sp_CreateProducer {string_arg}'))
     cursor = connection.cursor()
     cursor.execute(f'exec sp_CreateProducer{string_arg}')
     cursor.commit()
-
 
 
 @app.route('/department/set_manager', methods=['GET', 'POST'])
@@ -310,7 +310,6 @@ def execute_sp_set_manager(form):
     cursor.commit()
 
 
-
 @app.route('/shipment/read_incoming_shipments')
 def read_incoming_shipments():
     cursor = connection.cursor()
@@ -326,6 +325,7 @@ def read_outgoing_shipments():
     shipment_info = cursor.fetchall()
     return render_template('read_outgoing_shipments.html', shipment_info=shipment_info)
 
+
 @app.route('/shipment/read_name_of_logistics')
 def read_name_of_logistics():
     cursor = connection.cursor()
@@ -333,6 +333,59 @@ def read_name_of_logistics():
     logistics_info = cursor.fetchall()
     return render_template('read_name_of_logistics.html', logistics_info=logistics_info)
 
+
+
+##############################################################################
+
+
+@app.route('/shop/create_shop', methods=['GET', 'POST'])
+def create_shop():
+    form = CreateShopForm()
+    if request.method == 'GET':
+        return render_template('create_shop.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_shop(form)
+            return redirect('/shop/create_shop')
+        return 'invalid form'
+
+
+def execute_sp_create_shop(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop()  # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_CreateShop {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateShop{string_arg}')
+    cursor.commit()
+
+
+@app.route('/shop/delete_shop', methods=['GET', 'POST'])
+def delete_shop():
+    form = DeleteShopForm()
+    if request.method == 'GET':
+        return render_template('delete_shop.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_delete_shop(form)
+            return redirect('/shop/delete_shop')
+        return 'invalid form'
+
+
+def execute_sp_delete_shop(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop()  # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_DeleteShop {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_DeleteShop{string_arg}')
+    cursor.commit()
 
 
 
