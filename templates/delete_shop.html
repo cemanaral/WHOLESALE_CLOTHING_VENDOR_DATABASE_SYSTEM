@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Create Shop{% endblock %}
+
+{% block container %}
+  <h1>Delete Shop</h1>
+  <form method="POST" action="/shop/delete_shop">
+    {{ form.csrf_token }}
+    {{ render_field(form.TaxNumber) }}
+    <input type="submit" value="Delete">
+  </form>
+{% endblock %}
