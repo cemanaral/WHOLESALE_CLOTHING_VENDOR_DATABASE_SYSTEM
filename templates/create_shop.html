@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Create Shop{% endblock %}
+
+{% block container %}
+  <h1>Create Shop</h1>
+  <form method="POST" action="/shop/create_shop">
+    {{ form.csrf_token }}
+    {{ render_field(form.TaxNumber) }}
+    {{ render_field(form.CompanyName) }}
+    {{ render_field(form.Country) }}
+    {{ render_field(form.City) }}
+    {{ render_field(form.PostalCode) }}
+    {{ render_field(form.BankAccountNumber) }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
+

@@ -18,6 +18,7 @@ class CreateEmployeeForm(FlaskForm):
     PostalCode = StringField('PostalCode', validators=[Length(min=5, max=5), DataRequired()])
     Salary = IntegerField('Salary', validators=[DataRequired()])
 
+
 class AverageAgeOfDeparment(FlaskForm):
     Dno = IntegerField('Dno', validators=[DataRequired()])
 
@@ -61,5 +62,20 @@ class SetManagerForm(FlaskForm):
     Dno = IntegerField('Dno', validators=[DataRequired()])
     Ssn = IntegerField('Ssn', validators=[DataRequired()])
 
+
 class DeleteProducerForm(FlaskForm):
     TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
+
+
+class CreateShopForm(FlaskForm):
+    TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
+    CompanyName = StringField('CompanyName', validators=[DataRequired()])
+    Country = StringField('Country', validators=[DataRequired()])
+    City = StringField('City', validators=[DataRequired()])
+    PostalCode = StringField('PostalCode', validators=[DataRequired()])
+    BankAccountNumber = StringField('BankAccountNumber', validators=[DataRequired()])
+
+
+class DeleteShopForm(FlaskForm):
+    TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
+
