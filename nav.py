@@ -30,10 +30,20 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         View('Create Clothing', 'create_clothing'),
     ),
     Subgroup(
+
+        'Producer',
+        View('Show Producers', 'read_producer'),
+        View('Create Producer', 'create_producer'),
+    ),
+    Subgroup(
+        'Shop',
+        View('Show Shops', 'read_shop'),
+
         'Shipment',
         View('Show Incoming Shipments', 'read_incoming_shipments'),
         View('Show Outgoing Shipments', 'read_outgoing_shipments'),
         View('Show Contracted Logistics Companies', 'read_name_of_logistics')
+
     ),
 )    
 
