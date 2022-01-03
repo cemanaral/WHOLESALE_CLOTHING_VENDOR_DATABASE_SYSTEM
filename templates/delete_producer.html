@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Delete Producer{% endblock %}
+
+
+
+{% block container %}
+  <h1>Delete Producer</h1>
+  <form method="POST" action="/producer/delete_producer">
+    {{ form.csrf_token }}
+    {{ render_field(form.TaxNumber) }}
+    <input type="submit" value="Delete">
+  </form>
+{% endblock %}

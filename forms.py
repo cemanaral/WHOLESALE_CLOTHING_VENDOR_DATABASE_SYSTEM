@@ -63,6 +63,10 @@ class SetManagerForm(FlaskForm):
     Ssn = IntegerField('Ssn', validators=[DataRequired()])
 
 
+class DeleteProducerForm(FlaskForm):
+    TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
+
+
 class CreateShopForm(FlaskForm):
     TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])
     CompanyName = StringField('CompanyName', validators=[DataRequired()])
