@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block section %}Name of Contracted Logistics{% endblock %}
+
+
+
+{% block table %}
+    <thead>
+      <tr>
+        <th scope="col">Company Name</th>
+        <th scope="col">Logistics Company Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for logistics in logistics_info %}
+      <tr>
+        {% for item in logistics %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+{% endblock %}
+

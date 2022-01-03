@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Set Manager{% endblock %}
+
+{% block container %}
+  <h1>Set Manager</h1>
+  <form method="POST" action="/department/set_manager">
+    {{ form.csrf_token }}
+    {{ render_field(form.Dno) }}
+    {{ render_field(form.Ssn) }}
+    <input type="submit" value="Set">
+  </form>
+{% endblock %}
