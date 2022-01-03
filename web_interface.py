@@ -121,6 +121,29 @@ def read_clothing_profit():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_profit.html', clothing_info=clothing_info)
 
+@app.route("/clothing/create_clothing", methods=['GET', 'POST'])
+def create_clothing():
+    form = CreateClothingForm()
+    if request.method == 'GET':
+        return render_template('create_clothing.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_clothing(form)
+            return redirect("/clothing/create_clothing")
+        return 'invalid form'
+
+def execute_sp_create_clothing(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop()
+    arguments_str = str(arguments)[1:-1]
+
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateClothing {arguments_str}')
+    cursor.commit()
+    
+
 
 def print_form(form):
     for item in list(form):

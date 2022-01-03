@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Create Clothing{% endblock %}
+
+
+{% block container %}
+  <h1>Create Clothing</h1>
+  <form method="POST" action="/clothing/create_clothing">
+    {{ form.csrf_token }}
+    {{ render_field(form.Name) }}
+    {{ render_field(form.PTax) }}
+    {{ render_field(form.Type) }}
+    {{ render_field(form.Gender) }}
+    {{ render_field(form.Size) }}
+    {{ render_field(form.Color) }}
+    {{ render_field(form.BPrice) }}
+    {{ render_field(form.SPrice) }}
+    {{ render_field(form.ShipmentId) }}
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
+
