@@ -17,12 +17,15 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         View('Show Managers', 'read_managers'),
         View('Average Age of Department', 'averageAgeOfDepartment'),
         View('Create Department', 'create_department'),
+        View('Empty Manager', 'empty_manager'),
     ),
     Subgroup(
         'Clothing',
         View('Show Clothes', 'read_clothing'),
         View('Show Clothing Inventory Locations', 'read_clothing_inventory'),
         View('Show Clothing Types and Amounts', 'read_clothing_types'),
+        View('Show Clothing Profits', 'read_clothing_profit'),
+        View('Create Clothing', 'create_clothing'),
     ),
 )    
 

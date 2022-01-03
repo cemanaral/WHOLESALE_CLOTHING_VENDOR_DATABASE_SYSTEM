@@ -9,6 +9,7 @@ import pyodbc
 
 SERVER_NAME = 'YUSUFHASAN'
 
+
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
                trusted_connection='yes')
 
@@ -117,6 +118,7 @@ def read_clothing_types():
 
 
     
+
 @app.route('/department/averageAgeOfDepartment', methods=['GET', 'POST'])
 def averageAgeOfDepartment():
     form = AverageAgeOfDeparment()
@@ -166,9 +168,60 @@ def execute_sp_create_department(form):
     cursor.execute(f'exec sp_CreateDepartment{string_arg}')
     cursor.commit()
 
- 
+
+@app.route("/clothing/read_clothing_profit")
+def read_clothing_profit():
+    cursor = connection.cursor()
+    cursor.execute('select * from ProfitOfClothes')
+    clothing_info = cursor.fetchall()
+    return render_template('read_clothing_profit.html', clothing_info=clothing_info)
+
+@app.route("/clothing/create_clothing", methods=['GET', 'POST'])
+def create_clothing():
+    form = CreateClothingForm()
+    if request.method == 'GET':
+        return render_template('create_clothing.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_create_clothing(form)
+            return redirect("/clothing/create_clothing")
+        return 'invalid form'
+
+def execute_sp_create_clothing(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop()
+    arguments_str = str(arguments)[1:-1]
+
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_CreateClothing {arguments_str}')
+    cursor.commit()
 
 
+
+@app.route('/department/empty_manager', methods=['GET', 'POST'])
+def empty_manager():
+    form = EmptyManagerForm()
+    if request.method == 'GET':
+        return render_template('empty_manager.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_empty_manager(form)
+            return redirect('/department/empty_manager')
+        return 'invalid form'
+
+def execute_sp_empty_manager(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_EmptyManager {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_EmptyManager{string_arg}')
+    cursor.commit()
 
 
 def print_form(form):
