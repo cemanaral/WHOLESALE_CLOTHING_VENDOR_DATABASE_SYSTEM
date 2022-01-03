@@ -7,7 +7,8 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'YUSUFHASAN'
+SERVER_NAME = 'LAPTOP-JVD1T1M5'
+
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
                trusted_connection='yes')
@@ -113,7 +114,12 @@ def read_clothing_types():
     clothing_info = cursor.fetchall()
     return render_template('read_clothing_types.html', clothing_info=clothing_info)
     
-
+@app.route("/clothing/read_clothing_profit")
+def read_clothing_profit():
+    cursor = connection.cursor()
+    cursor.execute('select * from ProfitOfClothes')
+    clothing_info = cursor.fetchall()
+    return render_template('read_clothing_profit.html', clothing_info=clothing_info)
 
 
 def print_form(form):
