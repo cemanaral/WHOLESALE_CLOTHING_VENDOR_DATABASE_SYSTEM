@@ -34,11 +34,12 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         'Producer',
         View('Show Producers', 'read_producer'),
         View('Create Producer', 'create_producer'),
+        View('Delete Producer', 'delete_producer'),
     ),
     Subgroup(
         'Shop',
-        View('Show Shops', 'read_shop'),
-
+        View('Show Shops', 'read_shop'),),
+    Subgroup(
         'Shipment',
         View('Show Incoming Shipments', 'read_incoming_shipments'),
         View('Show Outgoing Shipments', 'read_outgoing_shipments'),

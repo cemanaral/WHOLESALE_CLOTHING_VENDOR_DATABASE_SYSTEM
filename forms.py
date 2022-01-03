@@ -61,3 +61,5 @@ class SetManagerForm(FlaskForm):
     Dno = IntegerField('Dno', validators=[DataRequired()])
     Ssn = IntegerField('Ssn', validators=[DataRequired()])
 
+class DeleteProducerForm(FlaskForm):
+    TaxNumber = IntegerField('TaxNumber', validators=[DataRequired()])

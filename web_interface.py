@@ -8,7 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 import pyodbc
 
 
-SERVER_NAME = 'LAPTOP-JVD1T1M5'
+SERVER_NAME = 'YUSUFHASAN'
 
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME, database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',               
@@ -249,14 +249,14 @@ def execute_sp_empty_manager(form):
 @app.route("/producer/read_producer")
 def read_producer():
     cursor = connection.cursor()
-    cursor.execute('select * from PRODUCER p inner join COMPANY c on p.TaxNumber = c.TaxNumber')
+    cursor.execute('select c.TaxNumber, c.CompanyName, c.Country, c.City, c.PostalCode, c.BankAccountNumber from PRODUCER p inner join COMPANY c on p.TaxNumber = c.TaxNumber')
     read_producer_info = cursor.fetchall()
     return render_template('read_producer.html', read_producer_info=read_producer_info)
 
 @app.route("/shop/read_shop")
 def read_shop():
     cursor = connection.cursor()
-    cursor.execute('select * from SHOP s inner join COMPANY c on s.TaxNumber = c.TaxNumber')
+    cursor.execute('select c.TaxNumber, c.CompanyName, c.Country, c.City, c.PostalCode, c.BankAccountNumber from SHOP s inner join COMPANY c on s.TaxNumber = c.TaxNumber')
     read_shop_info = cursor.fetchall()
     return render_template('read_shop.html', read_shop_info=read_shop_info)
 
@@ -333,7 +333,30 @@ def read_name_of_logistics():
     logistics_info = cursor.fetchall()
     return render_template('read_name_of_logistics.html', logistics_info=logistics_info)
 
+################################################################################
 
+@app.route('/producer/delete_producer', methods=['GET', 'POST'])
+def delete_producer():
+    form = DeleteProducerForm()
+    if request.method == 'GET':
+        return render_template('delete_producer.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            execute_sp_delete_producer(form)
+            return redirect('/producer/delete_producer')
+        return 'invalid form'
+
+def execute_sp_delete_producer(form):
+    arguments = []
+    for item in list(form):
+        arguments.append(str(item.raw_data[0]))
+    arguments.pop() # csrf token is not used
+
+    string_arg = str(arguments)[1:-1]
+    print((f'exec sp_DeleteProducer {string_arg}'))
+    cursor = connection.cursor()
+    cursor.execute(f'exec sp_DeleteProducer{string_arg}')
+    cursor.commit()
 
 
 def print_form(form):
