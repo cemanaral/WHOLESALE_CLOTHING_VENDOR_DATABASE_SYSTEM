@@ -7,7 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 
 import pyodbc
 
-SERVER_NAME = 'DESKTOP-ESS1P61'
+SERVER_NAME = 'LAPTOP-JVD1T1M5'
 
 connection = pyodbc.connect(driver='{SQL Server}', server=SERVER_NAME,
                             database='WHOLESALE_CLOTHING_VENDOR_DATABASE_SYSTEM',

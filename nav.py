@@ -37,7 +37,6 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
     ),
     Subgroup(
         'Shop',
-        View('Show Shops', 'read_shop'),),
         View('Show Shops', 'read_shop'),
         View('Create Shop', 'create_shop'),
         View('Delete Shop', 'delete_shop'),
