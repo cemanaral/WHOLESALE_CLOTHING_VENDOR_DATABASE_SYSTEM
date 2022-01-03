@@ -15,6 +15,8 @@ topbar = Navbar('Wholesale Clothing Vendor Database System',
         'Department',
         View('Show Departments', 'read_department'),
         View('Show Managers', 'read_managers'),
+        View('Average Age of Department', 'averageAgeOfDepartment'),
+        View('Create Department', 'create_department'),
     ),
     Subgroup(
         'Clothing',

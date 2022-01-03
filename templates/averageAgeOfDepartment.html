@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Average Age Of Department{% endblock %}
+
+{% block container %}
+  <h1>Average Age Of Department</h1>
+  <form method="POST" action="/department/averageAgeOfDepartment">
+    {{ form.csrf_token }}
+    {{ render_field(form.Dno) }}
+    <input type="submit" value="Show">
+  </form>
+{% endblock %}

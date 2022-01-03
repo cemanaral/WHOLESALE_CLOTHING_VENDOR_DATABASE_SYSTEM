@@ -15,3 +15,10 @@ class CreateEmployeeForm(FlaskForm):
     City = StringField('City', validators=[DataRequired()])
     PostalCode = StringField('PostalCode', validators=[Length(min=5, max=5), DataRequired()])
     Salary = IntegerField('Salary', validators=[DataRequired()])
+
+class AverageAgeOfDeparment(FlaskForm):
+    Dno = IntegerField('Dno', validators=[DataRequired()])
+
+class CreateDepartmentForm(FlaskForm):
+    Dno = IntegerField('Dno', validators=[DataRequired()])
+    Name = StringField('Name', validators=[DataRequired()])
