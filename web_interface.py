@@ -63,6 +63,19 @@ def create_employee():
             return redirect('/employee/create_employee')
         return 'invalid form'
 
+@app.route('/employee/delete_employee', methods=['GET', 'POST'])
+def delete_employee():
+    form = DeleteEmployeeForm()
+    if request.method == 'GET':
+        return render_template('delete_employee.html', form=form)
+    if request.method == 'POST':
+        ssn = form.Ssn.raw_data[0]
+        print(ssn)
+        cursor = connection.cursor()
+        cursor.execute( f"exec sp_DeleteEmployee {ssn}" )
+        cursor.commit()
+        return redirect('/employee/delete_employee')
+
 def execute_sp_create_employee(form):
     birthdateindex = 3
     arguments = []
