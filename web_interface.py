@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 from flask_bootstrap import Bootstrap
 from werkzeug.utils import redirect
 from wtforms.form import Form
@@ -456,6 +456,9 @@ def print_form(form):
     for item in list(form):
         print(item)
 
+@app.errorhandler(500)
+def error_handler_http500(error):
+    return render_template('error_handler_http500.html', error=error)
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0")

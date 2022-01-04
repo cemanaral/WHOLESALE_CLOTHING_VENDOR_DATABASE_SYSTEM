@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block section %}Error{% endblock %}
+
+{% block container %}
+  <h1>Error</h1>
+  <p>One or more fields entered was invalid.</p>
+  <p>Error message: {{ error }}</p>
+  </form>
+{% endblock %}
